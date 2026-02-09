@@ -1,8 +1,9 @@
-import { Component, useState, useRef } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { onWillStart, onWillUpdateProps } from "@odoo/owl";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
+import { useDropdownState } from "@web/core/dropdown/dropdown_hooks";
 
 export class AskAI extends Component {
     static template = "ai_mail_gt.ask_ai";
@@ -18,7 +19,7 @@ export class AskAI extends Component {
     setup() {
         this.orm = useService("orm");
         this.store = useService("mail.store");
-        this.dropdownRef = useRef("dropdown");
+        this.dropdownState = useDropdownState();
         this._lastResModel = null;
         this._lastActiveId = null;
 
@@ -94,12 +95,7 @@ export class AskAI extends Component {
         }
         // Reset message
         this.state.message = "";
-        // Close dropdown using component reference
-        if (this.dropdownRef.el) {
-            const dropdown = this.dropdownRef.el.closest('.o-dropdown');
-            if (dropdown && dropdown.__owl__) {
-                dropdown.__owl__.component.close?.();
-            }
-        }
+        // Close dropdown
+        this.dropdownState.close();
     }
 }

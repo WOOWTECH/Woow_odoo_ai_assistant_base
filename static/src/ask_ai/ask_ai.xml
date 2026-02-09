@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="ai_mail_gt.ask_ai">
-        <Dropdown t-if="activeId &amp;&amp; state.assistants.length > 0" t-ref="dropdown">
+        <Dropdown t-if="activeId &amp;&amp; state.assistants.length > 0" state="dropdownState">
             <button class="btn btn-sm btn-outline-primary" name="ask_ai" title="Ask AI">
                 Ask AI
             </button>
